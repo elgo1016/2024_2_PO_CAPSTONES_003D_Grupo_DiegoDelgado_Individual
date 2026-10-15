@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3Dedos - Impresión 3D & Geek Store</title>
+    <link rel="stylesheet" href="/estilos.css">
+    <style>
+        /* Efectos Neón en Amarillo Vibrante */
+        .glow-yellow { 
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.6); 
+        }
+        .glow-yellow-lg { 
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.4); 
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- NAVBAR-->
+    <header class="bg-brandPurple text-white border-b-4 border-brandYellow sticky top-0 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
+            
+            
+            <div class="flex items-center space-x-4 w-full md:w-auto justify-between md:justify-start">
+                
+
+
+                <!-- BRAND LOGO -->
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl"></span>
+                    <span class="text-2xl font-black tracking-wider text-white">
+                        3DEDOS
+                    </span>
+                </div>
+            </div>
+
+            <!-- NAVEGACIÓN Y ACCIONES -->
+            <div class="flex items-center nav-actions">
+                <nav class="flex space-x-6 text-sm font-bold">
+                    <a href="#catalogo" class="hover:text-brandYellow transition flex items-center gap-1">
+                         Catálogo
+                    </a>
+                    <a href="#eventos" class="hover:text-brandYellow transition flex items-center gap-1">
+                         Eventos
+                    </a>
+                    <a href="#instagram" class="hover:text-brandYellow transition flex items-center gap-1">
+                         Instagram
+                    </a>
+                </nav>
+
+                <button id="cartBtn" class="nav-button" type="button">Carrito <span id="cartCount" class="cart-count">0</span></button>
+                <button id="ordersBtn" class="nav-button hidden" type="button">Mis pedidos</button>
+                <!-- BOTÓN DE INICIO DE SESIÓN / REGISTRO -->
+                <div class="flex items-center account-actions">
+                    <div id="userInfo" class="hidden text-xs text-brandYellow font-bold"></div>
+                    <button id="authBtn" onclick="openModal()" class="bg-brandYellow hover:bg-brandYellowDark text-brandPurpleDark font-black px-4 py-2 rounded-xl text-xs transition glow-yellow border-2 border-white">
+                        Iniciar Sesión / Registro
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT (FONDO BLANCO) -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 space-y-12">
+
+        <!-- HERO BANNER -->
+        <section class="relative rounded-3xl bg-gradient-to-r from-brandPurpleDark via-brandPurple to-brandPurpleLight text-white p-8 md:p-12 border-4 border-brandYellow glow-yellow-lg flex flex-col md:flex-row items-center justify-between overflow-hidden shadow-2xl">
+            <div class="max-w-xl space-y-4 relative z-10">
+                <span class="bg-brandYellow text-brandPurpleDark text-xs px-3 py-1 rounded-full uppercase tracking-widest font-black inline-block shadow">
+                    Impresión 3D & Coleccionables
+                </span>
+                <h1 class="text-3xl md:text-5xl font-black leading-tight text-white drop-shadow-md">
+                    Lleva tus franquicias favoritas al mundo real
+                </h1>
+                <p class="text-purple-100 text-sm md:text-base font-medium">
+                    Figuras, accesorios, llaveros y cuadros coleccionables creados con la más alta precisión 3D.
+                </p>
+            </div>
+            <div class="mt-6 md:mt-0 relative z-10">
+                <a href="#catalogo" class="bg-brandYellow hover:bg-brandYellowDark text-brandPurpleDark px-8 py-4 rounded-2xl font-black text-sm transition glow-yellow border-2 border-white inline-block uppercase tracking-wider shadow-lg">
+                    Ver Catálogo
+                </a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 1: CATÁLOGO DE PRODUCTOS -->
+        <section id="catalogo" class="space-y-6">
+            <div class="flex justify-between items-end border-b-4 border-brandYellow pb-3">
+                <div>
+                    <h2 class="text-2xl font-black text-brandPurpleDark flex items-center gap-2">
+                        <span></span> Catálogo de Productos
+                    </h2>
+                    <p id="recSubtitle" class="text-xs text-slate-500 mt-1">
+                        Inicia sesión para personalizar las recomendaciones según tus sagas favoritas.
+                    </p>
+                </div>
+                <span class="text-xs bg-purple-100 text-brandPurpleDark border border-purple-300 px-3 py-1 rounded-full font-bold">
+                    Tienda Oficial 3Dedos
+                </span>
+            </div>
+
+            <!-- Grilla de Productos -->
+            <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Se puebla dinámicamente con JavaScript -->
+            </div>
+        </section>
+
+        <!-- PUBLICACIONES SELECCIONADAS DE INSTAGRAM -->
+        <section id="instagram" class="space-y-6 instagram-section">
+            <div class="flex justify-between items-end border-b-4 border-brandYellow pb-3">
+                <div>
+                    <h2 class="text-2xl font-black text-brandPurpleDark">Lo último en Instagram</h2>
+                    <p class="text-sm text-slate-500 mt-1">Mira nuestros trabajos, novedades y coleccionables destacados.</p>
+                </div>
+            </div>
+            <div id="instagramGrid" class="instagram-grid" aria-live="polite"></div>
+        </section>
+
+        <!-- SECCIÓN 2: PRÓXIMOS EVENTOS PRESENCIALES -->
+        <section id="eventos" class="space-y-6 bg-slate-50 p-8 rounded-3xl border-2 border-purple-200 shadow-md">
+            <div class="border-b-2 border-purple-200 pb-4">
+                <h2 class="text-2xl font-black text-brandPurpleDark flex items-center gap-2">
+                    <span class="text-brandYellowDark"></span> Próximos Eventos y Ferias Geek
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">Encuentra nuestro stand en las siguientes fechas y lugares para compras directas.</p>
+            </div>
+
+            <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </section>
+
+        <section class="newsletter" aria-labelledby="newsletterTitle">
+            <h2 id="newsletterTitle">Tu primera compra, con un 20% de descuento</h2>
+            <p>Únete al boletín de 3Dedos y recibe tu código por correo.</p>
+            <form id="newsletterForm">
+                <label for="newsletterEmail">Correo electrónico</label>
+                <div class="row wrap"><input id="newsletterEmail" type="email" maxlength="254" autocomplete="email" placeholder="tu@correo.com" required><button class="ui-button yellow" type="submit">Quiero mi 20%</button></div>
+                <label class="newsletter-consent"><input id="newsletterConsent" type="checkbox" required> Quiero suscribirme al boletín de 3Dedos.</label>
+                <p class="help">Primera compra con el mismo correo. Un uso por correo, válido por 30 días y no acumulable.</p>
+                <p id="newsletterStatus" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-brandPurpleDark text-white border-t-4 border-brandYellow py-8 text-center text-xs">
+        <p class="font-bold">© 2026 3Dedos e-commerce - Impresión 3D & Merchandising Geek.</p>
+        <p class="footer-admin"><a id="adminLink" class="hidden" href="/admin">Administración</a></p>
+    </footer>
+
+    <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+    <div id="authModal" class="modal-shell hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="modal-card auth-card">
+            <button class="close-button" data-close="authModal" aria-label="Cerrar acceso">✕</button>
+            <h3 id="authTitle">Iniciar sesión</h3>
+            <p id="authDescription" class="help">Conserva tus pedidos y personaliza tus recomendaciones.</p>
+            <div id="authTabs" class="tab-row"><button id="loginTab" type="button">Iniciar sesión</button><button id="registerTab" type="button">Crear cuenta</button></div>
+            <form id="loginForm" class="form-stack">
+                <div id="registrationFields" class="form-stack hidden">
+                    <label for="username">Nombre de Usuario<input id="username" name="nombre" maxlength="80" autocomplete="name" placeholder="Ej: GamerPRO"></label>
+                    <label for="phone">Teléfono (opcional)<input id="phone" type="tel" maxlength="30" autocomplete="tel"></label>
+                    <label for="preferenciaSaga">Saga o Franquicia Favorita<select id="preferenciaSaga"></select></label>
+                </div>
+                <label for="authEmail">Correo Electrónico<input id="authEmail" type="email" required maxlength="254" autocomplete="email" placeholder="correo@ejemplo.com"></label>
+                <label for="authPassword">Contraseña<input id="authPassword" type="password" required minlength="10" maxlength="128" autocomplete="current-password" placeholder="Mínimo 10 caracteres"></label>
+                <p id="authError" class="form-error" role="alert"></p>
+                <button id="authSubmit" type="submit" class="ui-button yellow full">Iniciar sesión</button>
+            </form>
+        </div>
+    </div>
+    <div id="cartModal" class="modal-shell hidden" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+        <div class="modal-card"><button class="close-button" data-close="cartModal" aria-label="Cerrar carrito">✕</button>
+            <h3 id="cartTitle">Tu carrito</h3><div id="cartItems"></div>
+            <label for="couponCode">Código de descuento</label>
+            <div class="row wrap"><input id="couponCode" maxlength="60" placeholder="Ingresa tu código"><button id="applyCoupon" class="ui-button secondary" type="button">Aplicar</button></div>
+            <p id="couponStatus" role="status"></p>
+            <div class="row between cart-total"><strong>Total estimado</strong><strong id="cartTotal"></strong></div>
+            <p id="checkoutHint" class="help"></p><p id="cartError" class="form-error" role="alert"></p>
+            <button id="checkoutBtn" class="ui-button yellow full" type="button">Confirmar pedido</button>
+        </div>
+    </div>
+    <div id="receiptModal" class="modal-shell hidden" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+        <div class="modal-card"><button class="close-button" data-close="receiptModal" aria-label="Cerrar confirmación">✕</button>
+            <h3 id="receiptTitle">¡Tu pedido quedó registrado!</h3><p class="help">Está pendiente de pago. No se ha realizado ningún cobro.</p>
+            <div id="receiptContent"></div><button class="ui-button full" data-close="receiptModal">Seguir viendo el catálogo</button>
+        </div>
+    </div>
+    <div id="ordersModal" class="modal-shell hidden" role="dialog" aria-modal="true" aria-labelledby="ordersTitle">
+        <div class="modal-card"><button class="close-button" data-close="ordersModal" aria-label="Cerrar mis pedidos">✕</button>
+            <h3 id="ordersTitle">Mis pedidos</h3><div id="ordersContent"></div>
+        </div>
+    </div>
+    <script src="/app.js" defer></script>
+</body>
+</html>

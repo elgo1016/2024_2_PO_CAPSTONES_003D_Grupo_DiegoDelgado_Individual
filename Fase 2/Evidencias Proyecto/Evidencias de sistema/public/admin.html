@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Administración · 3Dedos</title><link rel="stylesheet" href="/estilos.css"></head>
+<body class="bg-white text-slate-800 font-sans min-h-screen flex flex-col">
+    <header class="bg-brandPurple text-white border-b-4 border-brandYellow shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-3 row between wrap"><a href="/" class="text-2xl font-black tracking-wider">3DEDOS</a><div class="row wrap"><a href="/" class="nav-button">Volver a la tienda</a><button id="adminLogout" class="nav-button hidden">Cerrar sesión</button></div></div>
+    </header>
+    <main class="admin-main w-full flex-grow">
+        <div id="adminLoading" class="admin-loading">Cargando administración…</div>
+        <section id="adminGate" class="admin-gate hidden"><h1 class="admin-heading">Administración de 3Dedos</h1><p id="gateMessage"></p><a class="ui-button yellow" href="/">Ir a la tienda</a></section>
+        <div id="adminApp" class="hidden">
+            <h1 class="admin-heading">Administración de 3Dedos</h1><p class="help">Gestiona los productos, las ferias, Instagram y los pedidos de tu tienda.</p>
+            <div class="admin-nav" aria-label="Secciones de administración">
+                <button class="ui-button secondary active" data-panel="pedidos">Pedidos</button><button class="ui-button secondary" data-panel="productos">Productos</button><button class="ui-button secondary" data-panel="clientes">Clientes</button><button class="ui-button secondary" data-panel="eventos">Eventos</button><button class="ui-button secondary" data-panel="instagram">Instagram</button><button class="ui-button secondary" data-panel="negocio">Negocio</button>
+            </div>
+            <section id="panel-pedidos" class="admin-panel"><div class="row between wrap"><h2>Pedidos registrados</h2><button id="reloadOrders" class="ui-button secondary small">Actualizar pedidos</button></div><p class="help intro">Los pedidos A, B y C son registros de prueba. Los pedidos nuevos aparecen primero.</p><div id="orderStats" class="admin-stats"></div><div id="adminOrders" class="admin-orders"></div></section>
+            <section id="panel-productos" class="admin-panel hidden"><h2>Productos</h2><p class="help intro">Los precios se expresan en pesos chilenos enteros. El stock disponible excluye las unidades reservadas por pedidos pendientes.</p><div class="admin-columns"><div id="productList" class="table-wrap"></div>
+                <form id="productForm" class="admin-form"><h3 id="productFormTitle">Nuevo producto</h3><input id="productId" type="hidden">
+                    <label>Nombre<input id="productName" maxlength="160" required></label><label>Saga<select id="productSaga" required></select></label>
+                    <label>Precio en pesos<input id="productPrice" type="number" min="1" max="100000000" step="1" required></label><label>Stock disponible<input id="productStock" type="number" min="0" max="1000000" step="1" required></label>
+                    <label>Visibilidad<select id="productActive"><option value="1">Visible en catálogo</option><option value="0">Oculto</option></select></label>
+                    <label for="productImage">Imagen del producto<input id="productImage" type="file" accept="image/jpeg,image/png,image/webp"></label>
+                    <p class="help">JPG, PNG o WebP de hasta 30 MB. Se ajusta automáticamente sin estirarse ni recortarse.</p>
+                    <div class="product-media admin-image-preview"><img id="productImagePreview" alt="Vista previa del producto" hidden><span id="productImageEmpty">Sin imagen</span></div>
+                    <button id="removeProductImage" type="button" class="ui-button secondary small">Quitar imagen</button>
+                    <p id="productImageStatus" class="help" role="status"></p>
+                    <p id="productError" class="form-error" role="alert"></p><button id="saveProduct" class="ui-button yellow" type="submit">Guardar producto</button><button id="newProduct" class="ui-button secondary" type="button">Limpiar formulario</button>
+                </form></div></section>
+            <section id="panel-clientes" class="admin-panel hidden"><h2>Clientes</h2><p class="help intro">Clientes registrados y tres cuentas de prueba de los pedidos iniciales.</p><div id="clientList" class="table-wrap"></div></section>
+            <section id="panel-eventos" class="admin-panel hidden"><h2>Eventos y ferias</h2><p class="help intro">Al guardar un evento visible, aparecerá en la sección de ferias de la tienda. Las fechas iniciales provienen del prototipo y deben verificarse antes de usarlas públicamente.</p><div class="admin-columns"><div id="eventList" class="table-wrap"></div>
+                <form id="eventForm" class="admin-form"><h3 id="eventFormTitle">Nuevo evento</h3><input id="eventId" type="hidden">
+                    <label>Nombre<input id="eventName" maxlength="160" required></label><label>Fecha<input id="eventDate" type="date" required></label><label>Ubicación<input id="eventPlace" maxlength="240" required></label><label>Detalle<textarea id="eventDetail" maxlength="400" rows="3"></textarea></label>
+                    <label>Visibilidad<select id="eventActive"><option value="1">Publicado</option><option value="0">Oculto</option></select></label>
+                    <p id="eventError" class="form-error" role="alert"></p><button id="saveEvent" class="ui-button yellow" type="submit">Guardar evento</button><button id="newEvent" class="ui-button secondary" type="button">Limpiar formulario</button>
+                </form></div></section>
+            <section id="panel-instagram" class="admin-panel hidden"><h2>Publicaciones de Instagram</h2><p class="help intro">Pega el enlace de cada publicación o reel que quieras mostrar. Solo las publicaciones visibles aparecerán en la tienda.</p><div class="admin-columns"><div id="instagramList" class="table-wrap"></div>
+                <form id="instagramForm" class="admin-form"><h3 id="instagramFormTitle">Nueva publicación</h3><input id="instagramId" type="hidden">
+                    <label>Título<input id="instagramTitle" maxlength="160" required placeholder="Ej.: Nueva figura de Gengar"></label><label>Enlace de Instagram<input id="instagramLink" type="url" maxlength="500" required placeholder="https://www.instagram.com/p/.../"></label><label>Texto opcional<textarea id="instagramDescription" maxlength="400" rows="3" placeholder="Una breve descripción para tu tienda"></textarea></label>
+                    <label>Visibilidad<select id="instagramActive"><option value="1">Publicado</option><option value="0">Oculto</option></select></label>
+                    <p id="instagramError" class="form-error" role="alert"></p><button id="saveInstagram" class="ui-button yellow" type="submit">Guardar publicación</button><button id="newInstagram" class="ui-button secondary" type="button">Limpiar formulario</button>
+                </form></div></section>
+            <section id="panel-negocio" class="admin-panel hidden"><h2>Datos del negocio</h2><div id="businessInfo" class="order-card"></div><p class="help">Cada producto y evento pertenece a este negocio mediante su identificador.</p></section>
+        </div>
+    </main>
+    <footer class="bg-brandPurpleDark text-white border-t-4 border-brandYellow py-8 text-center text-xs"><p class="font-bold">© 2026 3Dedos e-commerce - Impresión 3D & Merchandising Geek.</p></footer>
+    <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+    <div id="cancelModal" class="modal-shell hidden" role="dialog" aria-modal="true" aria-labelledby="cancelTitle"><div class="modal-card"><button class="close-button" data-close="cancelModal" aria-label="Cerrar cancelación">✕</button><h3 id="cancelTitle">Cancelar pedido</h3><p id="cancelDescription"></p><p class="help">Las unidades reservadas volverán al stock disponible. El pedido seguirá en el historial como cancelado.</p><p id="cancelError" class="form-error" role="alert"></p><div class="confirmation-actions"><button id="confirmCancel" class="ui-button">Confirmar cancelación</button><button class="ui-button secondary" data-close="cancelModal">Volver</button></div></div></div>
+    <script src="/app.js" defer></script><script src="/admin.js" defer></script>
+</body></html>
